@@ -5,7 +5,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
-import App from './src/App.js'
+import App from './App.js'
 
 const app = (
   <HashRouter>
