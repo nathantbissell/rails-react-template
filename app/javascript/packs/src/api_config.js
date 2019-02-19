@@ -1,4 +1,4 @@
-let apiUrl
+let apiUrl = ""
 const apiUrls = {
   production: '<insert-production-url>',
   development: 'http://localhost:3000'
