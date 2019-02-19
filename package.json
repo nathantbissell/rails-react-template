@@ -4,10 +4,15 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.3.1",
     "dotenv": "^6.2.0",
+    "dotenv-expand": "^4.2.0",
+    "promise": "^8.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
+    "react-dev-utils": "^7.0.3",
     "react-dom": "^16.8.2",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
