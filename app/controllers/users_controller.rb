@@ -1,5 +1,5 @@
 class UsersController < ApiController
-  before_action :require_authentication, except: %i[signup, signin]
+  before_action :require_authentication, except: %i[signup signin]
 
   def index
     @user = User.all
@@ -32,9 +32,9 @@ class UsersController < ApiController
         path:'/',
         expires: Time.now + 1.year
       }
-       render json: user, status: :created
+       send_error('Email/Password combination invalid')
     else
-      head :unauthorized
+      render json: user, status: :created
     end
   end
 
@@ -69,7 +69,7 @@ class UsersController < ApiController
   # only allow 'white list' parameters through to be used in create and update actions
   def user_creds
     params.require(:credentials)
-          .permit(:email, :password, :password_credentials)
+          .permit(:email, :password, :password_confirmation)
   end
 
   def pw_creds
