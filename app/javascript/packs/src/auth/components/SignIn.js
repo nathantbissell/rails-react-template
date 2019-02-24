@@ -11,12 +11,8 @@ class SignIn extends Component {
 
     this.state = {
       userId: '',
-      firstName: '',
-      lastName: '',
       email: '',
-      password: '',
-      passwordConfirmation: '',
-      userType: ''
+      password: ''
     }
   }
 
@@ -26,16 +22,21 @@ class SignIn extends Component {
 
   signIn = event => {
     event.preventDefault()
-
+    const dataObj = {
+      "credentials":{
+        email: this.state.email,
+        password: this.state.password
+      }
+    }
     const { email, password } = this.state
     const { flash, history, setUser } = this.props
-    signIn(this.state)
-      .then(res => res.ok ? res : new Error())
-      .then(res => res.json())
-      .then(res => setUser(res.user))
+    axios.post('http://localhost:3000/sign_in',dataObj)
+      .then(res => setUser(res.data))
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       .then(() => history.push('/home'))
       .catch(() => flash(messages.signInFailure, 'flash-error'))
+      .catch(console.error)
+
   }
 
   render () {

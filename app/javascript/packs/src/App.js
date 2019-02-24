@@ -6,6 +6,7 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
+      user: null,
       email: "",
       password: ""
     }
@@ -79,7 +80,6 @@ class App extends Component {
     return (
       <React.Fragment>
         {hello}
-        {sampleSignIn}
       </React.Fragment>
 
     )
