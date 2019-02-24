@@ -5,6 +5,7 @@ import axios from 'axios'
 import Header from './header/Header.js'
 import SignIn from './auth/components/SignIn.js'
 import SignUp from './auth/components/SignUp.js'
+import SignOut from './auth/components/SignOut.js'
 
 class App extends Component {
   constructor(){
@@ -44,6 +45,10 @@ class App extends Component {
           />
           <Route path='/sign-in' render={() => (
               <SignIn setUser={this.setUser} />
+            )}
+          />
+          <Route path='/sign-out' render={() => (
+              <SignOut clearUser={this.clearUser} />
             )}
           />
         </main>

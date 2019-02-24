@@ -11,7 +11,7 @@ class ChangePassword extends Component {
 
     this.state = {
       old: '',
-      new: '',
+      new_pw: '',
     }
   }
 
@@ -22,7 +22,7 @@ class ChangePassword extends Component {
   changePassword = event => {
     event.preventDefault()
 
-    const { old, new } = this.state
+    const { old, new_pw } = this.state
     const { flash, history, user } = this.props
 
     changePassword(this.state, user)
@@ -33,7 +33,7 @@ class ChangePassword extends Component {
   }
 
   render () {
-    const { old, new } = this.state
+    const { old, new_pw } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.changePassword}>
@@ -51,8 +51,8 @@ class ChangePassword extends Component {
         <label htmlFor="newPassword">New Password</label>
         <input
           required
-          name="new"
-          value={new}
+          name="new_pw"
+          value={new_pw}
           type="password"
           placeholder="New Password"
           onChange={this.handleChange}
