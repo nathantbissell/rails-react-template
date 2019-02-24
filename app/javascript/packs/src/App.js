@@ -11,6 +11,16 @@ class App extends Component {
     }
   }
 
+  componentDidMount(){
+    axios.post('http://localhost:3000/check_user')
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((res) => {
+      console.log(res.response.data.errors[0].detail)
+    })
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value
