@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Route, Link} from 'react-router-dom'
 import axios from 'axios'
 
+import Header from './header/Header.js'
+import SignIn from './auth/components/SignIn.js'
+import SignUp from './auth/components/SignUp.js'
+
 class App extends Component {
   constructor(){
     super()
@@ -15,7 +19,6 @@ class App extends Component {
     this.setState({user: loggedInUser,loggedIn:true})
   }
 
-
   clearUser = () => {
     this.setState({user: null,loggedIn:false})
   }
@@ -24,26 +27,33 @@ class App extends Component {
     axios.post('http://localhost:3000/check_user')
     .then((res) => {
       this.setUser(res.data)
+    })
 
-    })
-    .then(() => {
-      console.log(this.state)
-    })
   }
 
   render() {
-    const { email, password } = this.state
-    const hello = (
+    const { user, loggedIn } = this.state
+    const mainHtml = (
       <React.Fragment>
-        <h1>Hello World!</h1>
-        <p>Welcome to Rails-React Full Stack Template</p>
+        <Header user={user} loggedIn={loggedIn}/>
+
+        <main className='container'>
+          <Route path='/sign-up' render={() => (
+              <SignUp setUser={this.setUser} />
+            )}
+          />
+          <Route path='/sign-in' render={() => (
+              <SignIn setUser={this.setUser} />
+            )}
+          />
+        </main>
       </React.Fragment>
     )
 
 
     return (
       <React.Fragment>
-        {hello}
+        {mainHtml}
       </React.Fragment>
 
     )

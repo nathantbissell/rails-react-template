@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-// import { signIn } from '../auth_api'
+import { signIn } from '../auth_api'
 // import messages from '../messages'
-import apiUrl from '../../api_config'
 
 class SignIn extends Component {
   constructor () {
@@ -29,12 +28,9 @@ class SignIn extends Component {
       }
     }
     const { email, password } = this.state
-    const { flash, history, setUser } = this.props
-    axios.post(`${apiUrl}/sign_in`,dataObj)
+    const { history, setUser } = this.props
+    signIn(dataObj)
       .then(res => setUser(res.data))
-      .then(() => flash(messages.signInSuccess, 'flash-success'))
-      .then(() => history.push('/home'))
-      .catch(() => flash(messages.signInFailure, 'flash-error'))
       .catch(console.error)
 
   }
