@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-// import { signIn } from '../auth_api'
+import { signIn } from '../auth_api'
 // import messages from '../messages'
-// import apiUrl from '../../api_config'
 
 class SignIn extends Component {
   constructor () {
@@ -11,12 +10,8 @@ class SignIn extends Component {
 
     this.state = {
       userId: '',
-      firstName: '',
-      lastName: '',
       email: '',
-      password: '',
-      passwordConfirmation: '',
-      userType: ''
+      password: ''
     }
   }
 
@@ -26,16 +21,18 @@ class SignIn extends Component {
 
   signIn = event => {
     event.preventDefault()
-
+    const dataObj = {
+      "credentials":{
+        email: this.state.email,
+        password: this.state.password
+      }
+    }
     const { email, password } = this.state
-    const { flash, history, setUser } = this.props
-    signIn(this.state)
-      .then(res => res.ok ? res : new Error())
-      .then(res => res.json())
-      .then(res => setUser(res.user))
-      .then(() => flash(messages.signInSuccess, 'flash-success'))
-      .then(() => history.push('/home'))
-      .catch(() => flash(messages.signInFailure, 'flash-error'))
+    const { history, setUser } = this.props
+    signIn(dataObj)
+      .then(res => setUser(res.data))
+      .catch(console.error)
+
   }
 
   render () {

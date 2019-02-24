@@ -23,7 +23,7 @@ class ApiController < ActionController::API
 
   private
   def authenticate_user
-      User.find_by(authentication_token: cookies.encrypted['a_t'])
+    cookies.encrypted['a_t'] ? User.find_by(authentication_token: cookies.encrypted['a_t']) : nil
   end
 
   def set_csrf_cookie

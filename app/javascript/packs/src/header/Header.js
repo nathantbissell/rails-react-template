@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const authenticatedOptions = (
+const loggedInHeader = (
   <React.Fragment>
     <Link to="/change-password">Change Password</Link>
     <Link to="/sign-out">Sign Out</Link>
@@ -9,20 +9,20 @@ const authenticatedOptions = (
   </React.Fragment>
 )
 
-const unauthenticatedOptions = (
+const loggedOutHeader = (
   <React.Fragment>
     <Link to="/sign-in">Sign In</Link>
+    <Link to="/sign-up">Register</Link>
   </React.Fragment>
 )
 
 
 
-const Header = ({ user }) => (
+const Header = ({ user, loggedIn }) => (
   <header className="main-header">
-    <h1>CoolJobs</h1>
+    <h1>Rail React Template</h1>
     <nav>
-      { user && <span>Welcome, {user.first_name}</span>}
-      { user ? authenticatedOptions : unauthenticatedOptions }
+      { loggedIn ? loggedInHeader : loggedOutHeader }
     </nav>
   </header>
 )

@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-// import { signOut } from '../auth_api'
+import { signOut } from '../auth_api'
 // import messages from '../messages'
 
 class SignOut extends Component {
   componentDidMount () {
-    const { flash, history, clearUser, user } = this.props
+    const {clearUser} = this.props
 
-    signOut(user)
-      .finally(() => flash(messages.signOutSuccess, 'flash-success'))
-      .finally(() => history.push('/'))
+    signOut()
       .finally(() => clearUser())
   }
 

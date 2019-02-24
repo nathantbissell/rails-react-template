@@ -2,74 +2,63 @@ import React, { Component } from 'react'
 import { Route, Link} from 'react-router-dom'
 import axios from 'axios'
 
+import Header from './header/Header.js'
+import SignIn from './auth/components/SignIn.js'
+import SignUp from './auth/components/SignUp.js'
+import SignOut from './auth/components/SignOut.js'
+
 class App extends Component {
   constructor(){
     super()
     this.state = {
-      email: "",
-      password: ""
+      user: null,
+      loggedIn: false
     }
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name] : e.target.value
-    })
+  setUser = (loggedInUser) => {
+    this.setState({user: loggedInUser,loggedIn:true})
   }
 
-  onSignIn = (e) => {
-    e.preventDefault()
-    const dataObj = {
-      "credentials":{
-        email: this.state.email,
-        password: this.state.password
-      }
-    }
-    axios.post('http://localhost:3000/sign_in',dataObj)
+  clearUser = () => {
+    this.setState({user: null,loggedIn:false})
+  }
+
+  componentDidMount(){
+    axios.post('http://localhost:3000/check_user')
     .then((res) => {
-      console.log(res.data)
+      this.setUser(res.data)
     })
-    .catch(console.error)
+
   }
 
   render() {
-    const { email, password } = this.state
-    const hello = (
+    const { user, loggedIn } = this.state
+    const mainHtml = (
       <React.Fragment>
-        <h1>Hello World!</h1>
-        <p>Welcome to Rails-React Full Stack Template</p>
+        <Header user={user} loggedIn={loggedIn}/>
+
+        <main className='container'>
+          <Route path='/sign-up' render={() => (
+              <SignUp setUser={this.setUser} />
+            )}
+          />
+          <Route path='/sign-in' render={() => (
+              <SignIn setUser={this.setUser} />
+            )}
+          />
+          <Route path='/sign-out' render={() => (
+              <SignOut clearUser={this.clearUser} />
+            )}
+          />
+        </main>
       </React.Fragment>
     )
 
-    const sampleSignIn = (
-      <React.Fragment>
-        <form onSubmit={this.onSignIn}>
-          <input
-            type="text"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            type="submit"
-            value="submit"
-          />
-        </form>
-      </React.Fragment>
-    )
 
     return (
       <React.Fragment>
-        {hello}
-        {sampleSignIn}
+        {mainHtml}
       </React.Fragment>
 
     )
