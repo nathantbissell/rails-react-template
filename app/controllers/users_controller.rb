@@ -32,9 +32,9 @@ class UsersController < ApiController
         path:'/',
         expires: Time.now + 1.year
       }
-       send_error('Email/Password combination invalid')
+       render json: user, status: :created
     else
-      render json: user, status: :created
+      send_error('Email/Password combination invalid')
     end
   end
 
@@ -53,7 +53,14 @@ class UsersController < ApiController
     @user = current_user
     if @user && @user.valid_password?(pw_creds[:old]) && !pw_creds[:new].blank?
       @user.password = pw_creds[:new]
+      @user.update_column(:authentication_token, Devise.friendly_token)
       @user.save
+      cookies.encrypted[:a_t] = {
+        value: @user[:authentication_token],
+        httponly: true,
+        path:'/',
+        expires: Time.now + 1.year
+      }
       head :ok
     else
       head :bad_request
@@ -62,7 +69,7 @@ class UsersController < ApiController
 
   # /check_user
   def check_user
-
+    render json: current_user, status: :ok
   end
 
   private
