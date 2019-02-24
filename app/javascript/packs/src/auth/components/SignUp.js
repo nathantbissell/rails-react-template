@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-// import { handleErrors, signUp, signIn } from '../auth_api'
+import { signUp, signIn } from '../auth_api'
 // import messages from '../messages'
 import apiUrl from '../../api_config'
 
@@ -24,9 +24,16 @@ class SignUp extends Component {
     event.preventDefault()
     const { email, password, password_confirmation} = this.state
     const { setUser } = this.props
+    const dataObj = {
+      "credentials":{
+        email: this.state.email,
+        password: this.state.password,
+        password_confirmation: this.state.password_confirmation
+      }
+    }
 
-    signUp(this.state)
-      .then(() => signIn(this.state))
+    signUp(dataObj)
+      .then(() => signIn(dataObj))
       .then(res => setUser(res.user))
   }
 
