@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 // import { signIn } from '../auth_api'
 // import messages from '../messages'
-// import apiUrl from '../../api_config'
+import apiUrl from '../../api_config'
 
 class SignIn extends Component {
   constructor () {
@@ -30,7 +30,7 @@ class SignIn extends Component {
     }
     const { email, password } = this.state
     const { flash, history, setUser } = this.props
-    axios.post('http://localhost:3000/sign_in',dataObj)
+    axios.post(`${apiUrl}/sign_in`,dataObj)
       .then(res => setUser(res.data))
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       .then(() => history.push('/home'))

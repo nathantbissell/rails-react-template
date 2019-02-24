@@ -7,40 +7,28 @@ class App extends Component {
     super()
     this.state = {
       user: null,
-      email: "",
-      password: ""
+      loggedIn: false
     }
+  }
+
+  setUser = (loggedInUser) => {
+    this.setState({user: loggedInUser,loggedIn:true})
+  }
+
+
+  clearUser = () => {
+    this.setState({user: null,loggedIn:false})
   }
 
   componentDidMount(){
     axios.post('http://localhost:3000/check_user')
     .then((res) => {
-      console.log(res.data)
-    })
-    .catch((res) => {
-      console.log(res.response.data.errors[0].detail)
-    })
-  }
+      this.setUser(res.data)
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name] : e.target.value
     })
-  }
-
-  onSignIn = (e) => {
-    e.preventDefault()
-    const dataObj = {
-      "credentials":{
-        email: this.state.email,
-        password: this.state.password
-      }
-    }
-    axios.post('http://localhost:3000/sign_in',dataObj)
-    .then((res) => {
-      console.log(res.data)
+    .then(() => {
+      console.log(this.state)
     })
-    .catch(console.error)
   }
 
   render() {
@@ -52,30 +40,6 @@ class App extends Component {
       </React.Fragment>
     )
 
-    const sampleSignIn = (
-      <React.Fragment>
-        <form onSubmit={this.onSignIn}>
-          <input
-            type="text"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            type="submit"
-            value="submit"
-          />
-        </form>
-      </React.Fragment>
-    )
 
     return (
       <React.Fragment>
