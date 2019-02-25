@@ -17,7 +17,7 @@ devise authentication, cookies, sessions and postgresql.
 ## Installation
 
 ### Download Template:
-1.  [Download](../../archive/master.zip) this template or Fork and Clone into your repository.
+1.  [Download](../../archive/master.zip) this template.
 1.  Unzip and rename the template directory (`unzip ~/Downloads/rails-react-template-master.zip`)
 1.  Move into a new project directory and `git init`.
 
