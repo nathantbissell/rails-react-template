@@ -1,11 +1,6 @@
 class UsersController < ApiController
   before_action :require_authentication, except: %i[signup signin]
 
-  def index
-    @user = User.all
-    render json: @user
-  end
-
   # /sign_up
   def signup
     new_user = User.create(user_creds)
