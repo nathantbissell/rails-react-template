@@ -28,7 +28,7 @@ devise authentication, cookies, sessions and postgresql.
     `'rails-react-template'`).
 
 ### Setup Environment:
-1.  Run `bundle install` and `npm install` to install packages and gems.
+1.  Run `bundle install` and `yarn install` to install packages and gems.
 1.  `git add` and `git commit` your changes.
 1.  Create a `.env` with `touch .env` to set up environment variables.
 1.  Generate new `development` and `test` secrets (`bundle exec rails secret`).
