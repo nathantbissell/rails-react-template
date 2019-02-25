@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # change password
   patch '/change_pw' => 'users#change_pw'
   # checks current user
-  post '/check_user' => 'users#check_user'
+  get '/check_user' => 'users#check_user'
 
   get '/users' => 'users#index'
 end

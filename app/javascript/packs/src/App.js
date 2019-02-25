@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
 import { Route, Link} from 'react-router-dom'
 import axios from 'axios'
+import Cookies from 'js-cookie';
 
+import apiUrl from './api_config.js'
+import { checkUser } from './auth/auth_api'
 import Header from './header/Header.js'
+import AuthenticatedRoute from './auth/components/AuthenticatedRoute.js'
 import SignIn from './auth/components/SignIn.js'
 import SignUp from './auth/components/SignUp.js'
 import SignOut from './auth/components/SignOut.js'
+import ChangePassword from './auth/components/ChangePassword.js'
 
 class App extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
+
     this.state = {
       user: null,
-      loggedIn: false
+      loggedIn: Cookies.get('a_t') ? true : false,
+      flashMessage: '',
+      messageType: null
     }
   }
 
@@ -24,31 +32,39 @@ class App extends Component {
     this.setState({user: null,loggedIn:false})
   }
 
-  componentDidMount(){
-    axios.post('http://localhost:3000/check_user')
-    .then((res) => {
-      this.setUser(res.data)
-    })
+  displayFlash = (message, type) => {
+    this.setState({ flashMessage: message, messageType: type})
 
+    setTimeout(() => this.setState({flashMessage: null }),2000)
   }
 
+  componentDidMount () {
+    axios.get(`${apiUrl}/check_user`)
+      .then((res) => {this.setUser(res.user)})
+      .catch(() => {this.clearUser})
+  }
   render() {
-    const { user, loggedIn } = this.state
+
+    const { user, loggedIn, flashMessage, messageType } = this.state
     const mainHtml = (
       <React.Fragment>
         <Header user={user} loggedIn={loggedIn}/>
-
+        {flashMessage && <div className={messageType}>{flashMessage}</div>}
         <main className='container'>
           <Route path='/sign-up' render={() => (
-              <SignUp setUser={this.setUser} />
+              <SignUp setUser={this.setUser} flash={this.displayFlash} />
             )}
           />
           <Route path='/sign-in' render={() => (
-              <SignIn setUser={this.setUser} />
+              <SignIn setUser={this.setUser} flash={this.displayFlash} />
             )}
           />
-          <Route path='/sign-out' render={() => (
-              <SignOut clearUser={this.clearUser} />
+          <AuthenticatedRoute path='/sign-out' loggedIn={loggedIn} render={() => (
+              <SignOut clearUser={this.clearUser} flash={this.displayFlash} />
+            )}
+          />
+          <AuthenticatedRoute path='/change-password' loggedIn={loggedIn} render={() => (
+              <ChangePassword user={user} flash={this.displayFlash} />
             )}
           />
         </main>

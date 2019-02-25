@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { signIn } from '../auth_api'
-// import messages from '../messages'
+import messages from '../messages'
 
 class SignIn extends Component {
   constructor () {
@@ -28,10 +28,12 @@ class SignIn extends Component {
       }
     }
     const { email, password } = this.state
-    const { history, setUser } = this.props
+    const { history, setUser, flash } = this.props
     signIn(dataObj)
       .then(res => setUser(res.data))
-      .catch(console.error)
+      .then(() => flash(messages.signInSuccess, 'flash-success'))
+      .then(() => history.push('/'))
+      .catch(() => flash(messages.signInError, 'flash-error'))
 
   }
 
