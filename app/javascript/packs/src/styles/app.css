@@ -1,8 +1,19 @@
-h1 {
-  color:blue;
+.header-title {
+  color: #CC342D;
+}
+a {
+  margin-right: 10px;
+}
+label {
+  margin-right: 5px;
+}
+input {
+  margin-right: 15px;
 }
 
-
+button[type="submit"] {
+  width: 100px;
+}
 .flash-success,
 .flash-warning,
 .flash-error {

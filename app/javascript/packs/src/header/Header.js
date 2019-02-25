@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 const loggedInHeader = (
   <React.Fragment>
+    <Link to="/home">Home</Link>
     <Link to="/change-password">Change Password</Link>
     <Link to="/sign-out">Sign Out</Link>
-    <Link to="/home">Home</Link>
   </React.Fragment>
 )
 
@@ -20,7 +20,7 @@ const loggedOutHeader = (
 
 const Header = ({ user, loggedIn }) => (
   <header className="main-header">
-    <h1>Rail React Template</h1>
+    <h1 className="header-title">Rail React Template</h1>
     <nav>
       { loggedIn ? loggedInHeader : loggedOutHeader }
     </nav>
