@@ -52,7 +52,6 @@ devise authentication, cookies, sessions and postgresql.
 ## Structure
 
 - All react code and components will be developed in app/javascript/pack/src directory
-
 - User authentication is built-in with devise.
 
 
@@ -125,15 +124,15 @@ Content-Type: application/json; charset=utf-8
 
 #### PATCH /change-password
 
-Request:
+Request data:
 
 ```md
-'{
+ {
     "passwords": {
       "old": "apollowho?!",
       "new": "thereisnotomorrow!"
     }
- }'
+ }
 ```
 
 Response:
