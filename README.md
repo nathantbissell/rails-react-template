@@ -51,9 +51,9 @@ devise authentication, cookies, sessions and postgresql.
 
 ## Structure
 
-All react code and components will be developed in app/javascript/pack/src directory
+- All react code and components will be developed in app/javascript/pack/src directory
 
-User authentication is built-in with devise.
+- User authentication is built-in with devise.
 
 
 ## API Documentaion
@@ -70,26 +70,17 @@ User authentication is built-in with devise.
 
 #### POST /sign-up
 
-Request:
+Request data:
 
-```sh
-curl http://localhost:4741/sign-up \
-  --include \
-  --request POST \
-  --header "Content-Type: application/json" \
-  --data '{
+```md
+ {
     "credentials": {
-      "email": "'"${EMAIL}"'",
-      "password": "'"${PASSWORD}"'",
-      "password_confirmation": "'"${PASSWORD}"'"
+      "email": "clubberlang@pityafool.com",
+      "password": "apollowho?!",
+      "password_confirmation": "apollowho?!"
     }
-  }'
+ }
 ```
-
-```sh
-EMAIL=ava@bob.com PASSWORD=hannah curl-scripts/auth/sign-up.sh
-```
-
 Response:
 
 ```md
@@ -97,33 +88,26 @@ HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
 
 {
-  "user": {
-    "id": 1,
-    "email": "ava@bob.com"
-  }
+    "id": 172231,
+    "email": "clubberlang@pityafool.com",
+    "created_at": "2019-02-25T14:11:54.642Z",
+    "updated_at": "2019-02-25T14:11:54.642Z"
 }
 ```
 
 #### POST /sign-in
 
-Request:
+Request data:
 
-```sh
-curl http://localhost:4741/sign-in \
-  --include \
-  --request POST \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "'"${EMAIL}"'",
-      "password": "'"${PASSWORD}"'"
-    }
-  }'
+```md
+{
+   "credentials": {
+     "email": "clubberlang@pityafool.com",
+     "password": "apollowho?!"
+   }
+}
 ```
 
-```sh
-EMAIL=ava@bob.com PASSWORD=hannah curl-scripts/auth/sign-in.sh
-```
 
 Response:
 
@@ -132,11 +116,10 @@ HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
 {
-  "user": {
-    "id": 1,
-    "email": "ava@bob.com",
-    "authentication_token": "BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f"
-  }
+    "id": 172231,
+    "email": "clubberlang@pityafool.com",
+    "created_at": "2019-02-25T14:11:54.642Z",
+    "updated_at": "2019-02-25T14:11:54.642Z"
 }
 ```
 
@@ -144,20 +127,13 @@ Content-Type: application/json; charset=utf-8
 
 Request:
 
-```sh
-curl --include --request PATCH "http://localhost:4741/change-password" \
-  --header "Authorization: Token token=$TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
+```md
+'{
     "passwords": {
-      "old": "'"${OLDPW}"'",
-      "new": "'"${NEWPW}"'"
+      "old": "apollowho?!",
+      "new": "thereisnotomorrow!"
     }
-  }'
-```
-
-```sh
-OLDPW='hannah' NEWPW='elle' TOKEN='BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f' sh curl-scripts/auth/change-password.sh
+ }'
 ```
 
 Response:
@@ -167,19 +143,6 @@ HTTP/1.1 204 No Content
 ```
 
 #### DELETE /sign-out
-
-Request:
-
-```sh
-curl http://localhost:4741/sign-out \
-  --include \
-  --request DELETE \
-  --header "Authorization: Token token=$TOKEN"
-```
-
-```sh
-TOKEN='BAhJIiVlZDIwZTMzMzQzODg5NTBmYjZlNjRlZDZlNzYxYzU2ZAY6BkVG--7e7f77f974edcf5e4887b56918f34cd9fe293b9f' sh curl-scripts/auth/sign-out.sh
-```
 
 Response:
 
