@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { signUp, signIn } from '../auth_api'
-// import messages from '../messages'
+import messages from '../messages'
 import apiUrl from '../../api_config'
 
 class SignUp extends Component {
@@ -23,7 +23,7 @@ class SignUp extends Component {
   signUp = event => {
     event.preventDefault()
     const { email, password, password_confirmation} = this.state
-    const { setUser } = this.props
+    const { history, setUser, flash } = this.props
     const dataObj = {
       "credentials":{
         email: this.state.email,
@@ -35,6 +35,9 @@ class SignUp extends Component {
     signUp(dataObj)
       .then(() => signIn(dataObj))
       .then(res => setUser(res.user))
+      .then(() => flash(messages.signUpSuccess, 'flash-success'))
+      .then(() => history.push('/'))
+      .catch(() => flash(messages.signUpError, 'flash-error'))
   }
 
   render () {
@@ -42,6 +45,7 @@ class SignUp extends Component {
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
+        <h3>Register</h3>
         <label htmlFor="email">Email</label>
         <input
           required

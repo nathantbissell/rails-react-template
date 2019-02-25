@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-// import { handleErrors, changePassword } from '../auth_api'
-// import messages from '../messages'
+import { changePassword } from '../auth_api'
+import messages from '../messages'
 import apiUrl from '../../api_config'
 
 class ChangePassword extends Component {
@@ -23,13 +23,17 @@ class ChangePassword extends Component {
     event.preventDefault()
 
     const { old, new_pw } = this.state
-    const { flash, history, user } = this.props
-
-    changePassword(this.state, user)
-      .then(handleErrors)
-      .then(() => flash(messages.changePasswordSuccess, 'flash-success'))
+    const { history, user, flash } = this.props
+    const dataObj = {
+      'passwords': {
+        'old': old,
+        'new': new_pw
+      }
+    }
+    changePassword(dataObj)
+      .then(() => flash(messages.changePwSuccess, 'flash-success'))
       .then(() => history.push('/'))
-      .catch(() => flash(messages.changePasswordFailure, 'flash-error'))
+      .catch(() => flash(messages.changePwError, 'flash-error'))
   }
 
   render () {

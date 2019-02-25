@@ -28,7 +28,6 @@ class UsersController < ApiController
       )
       cookies.encrypted[:a_t] = {
         value: user[:authentication_token],
-        httponly: true,
         path:'/',
         expires: Time.now + 1.year
       }
@@ -42,6 +41,7 @@ class UsersController < ApiController
   def signout
     if current_user
       current_user.update_column(:authentication_token, nil)
+      cookies[:a_t] = nil
       head :ok
     else
       head :bad_request
@@ -57,7 +57,6 @@ class UsersController < ApiController
       @user.save
       cookies.encrypted[:a_t] = {
         value: @user[:authentication_token],
-        httponly: true,
         path:'/',
         expires: Time.now + 1.year
       }
